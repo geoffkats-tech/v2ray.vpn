@@ -529,8 +529,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     /**
      * import free sub
      */
-    fun importFreeSubs()
-            : Boolean {
+    fun importFreeSubs(): Boolean {
         try {
             toast(R.string.title_sub_update)
             doAsync {

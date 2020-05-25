@@ -17,8 +17,8 @@ android {
         minSdkVersion 17
         targetSdkVersion Integer.parseInt("$targetSdkVer")
         multiDexEnabled true
-        versionCode 219
-        versionName "2.0.5"
+        versionCode 220
+        versionName "2.0.6"
     }
 
     signingConfigs {

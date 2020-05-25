@@ -88,7 +88,7 @@ class MainRecyclerAdapter(val activity: MainActivity) : RecyclerView.Adapter<Mai
                 holder.layout_share.visibility = View.VISIBLE
             }
 
-            if(VpnEncrypt.vpnRemark == remarks){
+            if(VpnEncrypt.builtinSubID == subid){
                 holder.statistics.text = address.toString().substring(0,5)+"..."
                 holder.layout_share.visibility=View.INVISIBLE
                 holder.layout_edit.visibility=View.INVISIBLE

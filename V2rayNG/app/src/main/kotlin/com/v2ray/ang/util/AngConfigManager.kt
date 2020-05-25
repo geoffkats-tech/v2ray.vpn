@@ -498,7 +498,7 @@ object AngConfigManager {
             }
 
             val vmess = angConfig.vmess[index]
-            if (vmess.remarks== VpnEncrypt.vpnRemark)return ""
+            if (vmess.subid== VpnEncrypt.builtinSubID)return ""
             if (angConfig.vmess[index].configType == AppConfig.EConfigType.Vmess) {
 
                 val vmessQRCode = VmessQRCode()
@@ -829,7 +829,6 @@ object AngConfigManager {
 //                servers = server.replace("\n", "")
 //            }
 
-            var count = 0
             var limit = -1
             var serverList=servers.trim().lines()
             if (servers.indexOf("MAX=") == 0) {
@@ -839,11 +838,31 @@ object AngConfigManager {
             }
             //Log.e("------","limit is "+limit)
             //Log.e("------","serverList1:"+serverList)
+
+            var limitProfiles:ArrayList<String> = arrayListOf()
             if (limit != -1 && limit < serverList.size) {
-                serverList = serverList.shuffled().take(limit)
+                try {
+                    val uqid=VpnEncrypt.getUniqueID()
+                    //Log.e("uqid",uqid.toString())
+                    val startPosition=uqid % serverList.size
+                    for (k in 0 until limit) {
+                        var thePosition=startPosition+k
+                        if(thePosition>=serverList.size) thePosition -= serverList.size
+                        limitProfiles.add(serverList[thePosition])
+                    }
+                }
+                catch (ex: Exception) {
+                    limitProfiles.clear()
+                    limitProfiles.addAll(serverList.shuffled().take(limit))
+                }
+                if (limitProfiles.isEmpty())limitProfiles.addAll(serverList.shuffled().take(limit))
             }
+            else
+                limitProfiles.addAll(serverList)
+
             //Log.e("------","serverList2:"+serverList)
-            serverList.forEach {
+            var count = 0
+            limitProfiles.forEach {
                         val resId = importConfig(it, subid)
                         if (resId == 0) {
                             count++
