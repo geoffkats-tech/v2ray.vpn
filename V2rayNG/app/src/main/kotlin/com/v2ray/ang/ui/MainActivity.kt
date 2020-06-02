@@ -291,6 +291,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
 
         R.id.real_ping_all -> {
+            if (isRunning) {
+                Utils.stopVService(this)
+            }
             for (k in 0 until configs.vmess.count()) {
                 configs.vmess[k].testResult = ""
                 adapter.updateConfigList()
@@ -322,6 +325,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
 
         R.id.retest_invalid_servers -> {
+            if (isRunning) {
+                Utils.stopVService(this)
+            }
             doAsync{
                 for (k in configs.vmess.count()-1 downTo 0) {
                     try {
@@ -700,7 +706,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe {
                         if (fabProgressCircle.isShown) {
-                            fabProgressCircle.hide()
+                            fabProgressCircle?.hide()
                         }
                     }
         } catch (e: Exception) {
