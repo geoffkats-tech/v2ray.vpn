@@ -186,7 +186,7 @@ object AngConfigManager {
     /**
      * gen and store v2ray config file
      */
-    fun genStoreV2rayConfig(index: Int): Boolean {
+    fun genStoreV2rayConfig(index: Int,isTest:Boolean=false): Boolean {
         try {
             if (angConfig.index < 0
                     || angConfig.vmess.count() <= 0
@@ -199,7 +199,7 @@ object AngConfigManager {
                 index2 = index
             }
 
-            val result = V2rayConfigUtil.getV2rayConfig(app, angConfig.vmess[index2])
+            val result = V2rayConfigUtil.getV2rayConfig(app, angConfig.vmess[index2],isTest)
             if (result.status) {
                 app.defaultDPreference.setPrefString(PREF_CURR_CONFIG, result.content)
                 app.defaultDPreference.setPrefString(PREF_CURR_CONFIG_GUID, currConfigGuid())

@@ -30,7 +30,7 @@ object V2rayConfigUtil {
     /**
      * 生成v2ray的客户端配置文件
      */
-    fun getV2rayConfig(app: AngApplication, vmess: VmessBean): Result {
+    fun getV2rayConfig(app: AngApplication, vmess: VmessBean,isTest:Boolean=false): Result {
         var result = Result(false, "")
         try {
             //检查设置
@@ -42,13 +42,13 @@ object V2rayConfigUtil {
 //            }
 
             if (vmess.configType == AppConfig.EConfigType.Vmess) {
-                result = getV2rayConfigType1(app, vmess)
+                result = getV2rayConfigType1(app, vmess,isTest)
             } else if (vmess.configType == AppConfig.EConfigType.Custom) {
                 result = getV2rayConfigType2(app, vmess)
             } else if (vmess.configType == AppConfig.EConfigType.Shadowsocks) {
-                result = getV2rayConfigType1(app, vmess)
+                result = getV2rayConfigType1(app, vmess,isTest)
             } else if (vmess.configType == AppConfig.EConfigType.Socks) {
-                result = getV2rayConfigType1(app, vmess)
+                result = getV2rayConfigType1(app, vmess,isTest)
             }
 
             val domainName = parseDomainName(result.content)
@@ -67,7 +67,7 @@ object V2rayConfigUtil {
     /**
      * 生成v2ray的客户端配置文件
      */
-    private fun getV2rayConfigType1(app: AngApplication, vmess: VmessBean): Result {
+    private fun getV2rayConfigType1(app: AngApplication, vmess: VmessBean,isTest:Boolean=false): Result {
         val result = Result(false, "")
         try {
             //取得默认配置
@@ -86,7 +86,7 @@ object V2rayConfigUtil {
 
             outbounds(vmess, v2rayConfig, app)
 
-            routing(vmess, v2rayConfig, app)
+            routing(vmess, v2rayConfig, app,isTest)
 
             if (app.defaultDPreference.getPrefBoolean(SettingsActivity.PREF_LOCAL_DNS_ENABLED, false)) {
                 customLocalDns(vmess, v2rayConfig, app)
@@ -363,14 +363,14 @@ object V2rayConfigUtil {
     /**
      * routing
      */
-    private fun routing(vmess: VmessBean, v2rayConfig: V2rayConfig, app: AngApplication): Boolean {
+    private fun routing(vmess: VmessBean, v2rayConfig: V2rayConfig, app: AngApplication,isTest:Boolean=false): Boolean {
         try {
             routingUserRule(app.defaultDPreference.getPrefString(AppConfig.PREF_V2RAY_ROUTING_AGENT, ""), AppConfig.TAG_AGENT, v2rayConfig)
             routingUserRule(app.defaultDPreference.getPrefString(AppConfig.PREF_V2RAY_ROUTING_DIRECT, ""), AppConfig.TAG_DIRECT, v2rayConfig)
             routingUserRule(app.defaultDPreference.getPrefString(AppConfig.PREF_V2RAY_ROUTING_BLOCKED, ""), AppConfig.TAG_BLOCKED, v2rayConfig)
 
             v2rayConfig.routing.domainStrategy = app.defaultDPreference.getPrefString(SettingsActivity.PREF_ROUTING_DOMAIN_STRATEGY, "IPIfNonMatch")
-            val routingMode = app.defaultDPreference.getPrefString(SettingsActivity.PREF_ROUTING_MODE, "0")
+            var routingMode = app.defaultDPreference.getPrefString(SettingsActivity.PREF_ROUTING_MODE, "0")
 
             // Hardcode googleapis.cn
             val googleapisRoute = V2rayConfig.RoutingBean.RulesBean(
@@ -378,7 +378,7 @@ object V2rayConfigUtil {
                 outboundTag = AppConfig.TAG_AGENT,
                 domain = arrayListOf("domain:googleapis.cn")
             )
-
+            if (isTest)routingMode="0"
             when (routingMode) {
                 "0" -> {
                 }

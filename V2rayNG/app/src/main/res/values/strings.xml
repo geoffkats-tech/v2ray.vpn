@@ -121,8 +121,8 @@
     <string name="summary_pref_tg_group">Join Telegram Group</string>
     <string name="toast_tg_app_not_found">Telegram app not found</string>
 
-    <string name="title_pref_promotion">Ad:Shadowsocks</string>
-    <string name="summary_pref_promotion">Ad: High Speed Shadowsocks Proxy Service</string>
+    <string name="title_pref_promotion">Ad:V2ray/SS</string>
+    <string name="summary_pref_promotion">Ad:High Speed V2ray/SS Proxy</string>
     <string name="promotionUrl">https://github.com/killgcd/justmysocks/blob/master/en.md#head</string>
 
     <string name="title_pref_version">Version</string>

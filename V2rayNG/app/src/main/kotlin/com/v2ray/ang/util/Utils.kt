@@ -357,7 +357,7 @@ object Utils {
         Log.e("testVService",index.toString())
         AngConfigManager.setActiveServer(index)
 
-        if (AngConfigManager.genStoreV2rayConfig(-1)) {
+        if (AngConfigManager.genStoreV2rayConfig(-1,true)) {
             val configContent = AngConfigManager.currGeneratedV2rayConfig()
             val configType = AngConfigManager.currConfigType()
             if (configType == AppConfig.EConfigType.Custom) {

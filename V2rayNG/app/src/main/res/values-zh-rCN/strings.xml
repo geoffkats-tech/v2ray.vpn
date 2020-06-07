@@ -119,8 +119,8 @@
     <string name="summary_pref_tg_group">加入Telegram Group</string>
     <string name="toast_tg_app_not_found">未找到Telegram app</string>
 
-    <string name="title_pref_promotion">Ad:高速SS服务</string>
-    <string name="summary_pref_promotion">广告:力荐-搬瓦工官方SS服务不怕被墙</string>
+    <string name="title_pref_promotion">Ad:高速V2ray/SS</string>
+    <string name="summary_pref_promotion">力荐:搬瓦工高速V2ray/SS服务不怕被墙</string>
     <string name="promotionUrl">https://lihi1.com/mWZJL</string>
 
     <string name="title_pref_version">版本</string>
