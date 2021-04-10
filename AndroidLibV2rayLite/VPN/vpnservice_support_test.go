@@ -26,12 +26,12 @@ func TestProtectedDialer_PrepareDomain(t *testing.T) {
 		name string
 		args args
 	}{
-		// TODO: Add test cases.
+		 TODO: Add test cases.
 		{"", args{"baidu.com:80"}},
-		// {"", args{"cloudflare.com:443"}},
-		// {"", args{"apple.com:443"}},
-		// {"", args{"110.110.110.110:443"}},
-		// {"", args{"[2002:1234::1]:443"}},
+		 {"", args{"cloudflare.com:443"}},
+		 {"", args{"apple.com:443"}},
+		 {"", args{"110.110.110.110:443"}},
+		{"", args{"[2002:1234::1]:443"}},
 	}
 	d := NewPreotectedDialer(fakeSupportSet{})
 	for _, tt := range tests {
